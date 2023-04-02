@@ -4,4 +4,5 @@ module.exports = {
   newTask: require('./new-task'),
   taskCreated: require('./task-created'),
   taskCreationError: require('./task-creation-error'),
+  newGame: require('./new-game')
 };

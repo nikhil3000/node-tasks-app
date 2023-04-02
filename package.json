@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest --no-cache",
     "lint": "eslint . --ext .js",
-    "build": "npx sequelize-cli db:migrate"
+    "build": "npx sequelize-cli db:migrate",
+    "start": "nodemon app.js"
   },
   "jest": {
     "collectCoverage": true
@@ -22,6 +23,9 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/slackapi/tasks-app/issues"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org "
   },
   "homepage": "https://github.com/slackapi/tasks-app#readme",
   "dependencies": {

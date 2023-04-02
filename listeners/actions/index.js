@@ -4,6 +4,7 @@ const { appHomeNavOpenCallback } = require('./block_app-home-nav-open');
 const { buttonMarkAsDoneCallback } = require('./block_button-mark-as-done');
 const { reopenTaskCallback } = require('./block_reopen-task');
 const { openTaskCheckboxClickedCallback } = require('./block_open_task_list_home');
+const { joinGame } = require('./join-game');
 
 module.exports.register = (app) => {
   app.action(
@@ -30,4 +31,8 @@ module.exports.register = (app) => {
     },
     openTaskCheckboxClickedCallback,
   );
+  app.action(
+      {action_id: /(joinMafia-).*/, type: 'block_actions'},
+      joinGame,
+  )
 };
