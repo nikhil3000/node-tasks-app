@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       User.hasMany(models.Task, { as: 'createdTasks', foreignKey: 'creatorId' });
       User.hasMany(models.Task, { as: 'assignedTasks', foreignKey: 'currentAssigneeId' });
+      // User.hasMany(models.Game, {as: 'createdGames', foreignKey: 'creatorId'});
+      User.belongsToMany(models.Game, { through: models.GameUserAssociation });
+
+      // User.belongsToMany(models.GameUserAssociation, { as: 'participatingGames', foreignKey: 'userId'});
     }
   }
   User.init({

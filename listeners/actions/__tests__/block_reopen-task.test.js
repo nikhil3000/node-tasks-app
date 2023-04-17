@@ -4,13 +4,13 @@ const {
   testAction,
   testActionError,
 } = require('./__utils__/action-test-util-funcs');
-const { reopenTaskCallback } = require('../block_reopen-task');
+const { startGameCallback } = require('../start-game');
 
 describe('App home nav completed action callback function test ', () => {
   it('Acknowledges the action and reloads the app home', async () => {
-    await testAction(buttonPressActionPayload, reopenTaskCallback);
+    await testAction(buttonPressActionPayload, startGameCallback);
   });
   it('Logs an error when the the new view fails to be published', async () => {
-    await testActionError(buttonPressActionPayload, reopenTaskCallback);
+    await testActionError(buttonPressActionPayload, startGameCallback);
   });
 });

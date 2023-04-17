@@ -1,57 +1,40 @@
 const {
-  HomeTab, Header, Divider, Section, Actions, Elements, Input, Bits,
-} = require('slack-block-builder');
+  HomeTab, Header, Divider, Section, Actions, Elements} = require('slack-block-builder');
 const pluralize = require('pluralize');
 const { DateTime } = require('luxon');
 
-module.exports = (openTasks) => {
+module.exports = (allGames) => {
   const homeTab = HomeTab({ callbackId: 'tasks-home', privateMetaData: 'open' }).blocks(
     Actions({ blockId: 'task-creation-actions' }).elements(
-      Elements.Button({ text: 'Open tasks' }).value('app-home-nav-open').actionId('app-home-nav-open').primary(true),
-      Elements.Button({ text: 'Completed tasks' }).value('app-home-nav-completed').actionId('app-home-nav-completed'),
-      Elements.Button({ text: 'Create a task' }).value('app-home-nav-create-a-task').actionId('app-home-nav-create-a-task'),
+      Elements.Button({ text: 'My Games' }).value('app-home-nav-open').actionId('app-home-nav-open').primary(true),
+      Elements.Button({ text: 'Ongoing Game' }).value('app-home-nav-completed').actionId('app-home-nav-completed'),
+      // Elements.Button({ text: 'Create a task' }).value('app-home-nav-create-a-task').actionId('app-home-nav-create-a-task'),
     ),
   );
 
-  if (openTasks.length === 0) {
+  if (allGames.length === 0) {
     homeTab.blocks(
-      Header({ text: 'No open tasks' }),
+      Header({ text: 'No Games created' }),
       Divider(),
-      Section({ text: 'Looks like you\'ve got nothing to do.' }),
+      Section({ text: 'Looks like you\'ve not created any games.' }),
     );
     return homeTab.buildToJSON();
   }
 
-  /*
-    Block kit Options have a maximum length of 10, and most people have more than 10 open tasks
-    at a given time, so we break the openTasks list into chunks of ten
-    and add them as multiple blocks.
-  */
-  const tasksInputsArray = [];
-  let holdingArray = [];
-  let start = 0;
-  const end = openTasks.length;
-  const maxOptionsLength = 10;
 
-  for (start, end; start < end; start += maxOptionsLength) {
-    holdingArray = openTasks.slice(start, start + maxOptionsLength);
-    tasksInputsArray.push(
-      Input({ label: ' ', blockId: `open-task-status-change-${start}` }).dispatchAction().element(Elements.Checkboxes({ actionId: 'blockOpenTaskCheckboxClicked' }).options(holdingArray.map((task) => {
-        const option = {
-          text: `*${task.title}*`,
-          value: `open-task-${task.id}`,
-        };
-        if (task.dueDate) {
-          option.description = `Due ${DateTime.fromJSDate(task.dueDate).toRelativeCalendar()}`;
-        }
-        return Bits.Option(option);
-      }))),
-    );
-  }
+
+  const completedTaskList = allGames.map((game) =>
+      Section({ text: `${game.title} with status ${game.status}` }).accessory(
+          Elements.Button({ text: 'Start Game' })
+              .value(`${game.id}`)
+              .actionId('start-game'),
+      ),
+  );
+
   homeTab.blocks(
-    Header({ text: `You have ${openTasks.length} open ${pluralize('task', openTasks.length)}` }),
+    Header({ text: `You have Nikhil ${allGames.length} open ${pluralize('task', allGames.length)}` }),
     Divider(),
-    tasksInputsArray,
+      completedTaskList,
   );
 
   return homeTab.buildToJSON();

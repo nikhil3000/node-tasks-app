@@ -23,6 +23,10 @@ module.exports = {
                 onDelete: 'SET NULL',
                 primaryKey: true
             },
+            associationType: {
+                type: Sequelize.ENUM('CREATOR', 'PLAYER'),
+                primaryKey: true
+            },
             status: {
                 type: Sequelize.ENUM('WAITING', 'IN_GAME', 'ELIMINATED'),
             },

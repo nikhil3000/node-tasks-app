@@ -10,17 +10,30 @@ module.exports = (sequelize, DataTypes) => {
             // Model attributes are defined here
             gameId: {
               type: DataTypes.INTEGER,
-              primaryKey: true
+              primaryKey: true,
+                references: {
+                    model: 'Games',
+                    key: 'id',
+                },
             },
             userId: {
                 type: DataTypes.INTEGER,
-                primaryKey: true
+                primaryKey: true,
+                references: {
+                    model: 'Users',
+                    key: 'id',
+                },
             },
             status: {
                 type: DataTypes.ENUM,
                 values: ['WAITING', 'IN_GAME', 'ELIMINATED'],
                 defaultValue: 'WAITING',
-            }
+            },
+            associationType: {
+                type: DataTypes.ENUM,
+                values: ['CREATOR', 'PLAYER'],
+                defaultValue: 'PLAYER'
+            },
         },
         {
             sequelize,

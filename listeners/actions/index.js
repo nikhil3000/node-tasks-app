@@ -2,7 +2,7 @@ const { appHomeNavCompletedCallback } = require('./block_app-home-nav-completed'
 const { appHomeNavCreateATaskCallback } = require('./block_app-home-nav-create-a-task');
 const { appHomeNavOpenCallback } = require('./block_app-home-nav-open');
 const { buttonMarkAsDoneCallback } = require('./block_button-mark-as-done');
-const { reopenTaskCallback } = require('./block_reopen-task');
+const { startGameCallback } = require('./start-game');
 const { openTaskCheckboxClickedCallback } = require('./block_open_task_list_home');
 const { joinGame } = require('./join-game');
 
@@ -21,8 +21,8 @@ module.exports.register = (app) => {
     buttonMarkAsDoneCallback,
   );
   app.action(
-    { action_id: 'reopen-task', type: 'block_actions' },
-    reopenTaskCallback,
+    { action_id: 'start-game', type: 'block_actions' },
+    startGameCallback,
   );
   app.action(
     {
