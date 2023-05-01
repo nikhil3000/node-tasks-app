@@ -1,6 +1,6 @@
 const { Task, Game, User, GameUserAssociation } = require('../../models');
 const { reloadAppHome } = require('../../utilities');
-const {completedTasksView} = require("../../user-interface/app-home");
+const {inProgressGamesView} = require("../../user-interface/app-home");
 const {modals} = require("../../user-interface");
 const { Op } = require('sequelize');
 
@@ -23,7 +23,11 @@ const startGameCallback = async ({ ack, action, client, body }) => {
       trigger_id: body.trigger_id,
       view: modals.taskCreationError(`We need at least 6 members to start the game.`),
     });
+    // TODO: Return from here
+    // return;
   }
+  gameData[0].set('status', 'IN_PROGRESS');
+  await gameData[0].save();
   const totalPlayerCount = gamePlayers.length;
   const rolesList = [];
   const mafiaCount = totalPlayerCount / 4;

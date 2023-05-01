@@ -1,4 +1,3 @@
-// const reloadAppHome = require('../../utilities/reload-app-home');
 const {User, GameUserAssociation, Game} = require("../../models");
 const { messages } = require('../../user-interface')
 

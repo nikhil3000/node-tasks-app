@@ -1,6 +1,6 @@
 const {
-  openTasksView,
-  completedTasksView,
+  allCreatedGamesView,
+  inProgressGamesView,
 } = require('../user-interface/app-home');
 const { User, Game } = require('../models');
 
@@ -23,27 +23,29 @@ module.exports = async (client, slackUserID, slackWorkspaceID, navTab) => {
     const gamesListForView = [];
     gamesCreated.forEach(game => {gamesListForView.push({title: game.title, status: game.status, id: game.id})})
 
-    console.log(JSON.stringify(gamesCreated));
     if (navTab === 'completed') {
-      // const recentlyCompletedTasks = await user.getAssignedTasks({
-      //   where: {
-      //     status: 'CLOSED',
-      //     updatedAt: {
-      //       [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000),
-      //     },
-      //   },
-      // });
+      const createdGameInProgress = gamesCreated.find(game => game.status === 'IN_PROGRESS');
+      const gamePlayers = await Game.findAll({
+        where: {
+          id: createdGameInProgress.id
+        },
+        include: [
+          {
+            model: User
+          }
+        ]
+      })
 
       await client.views.publish({
         user_id: slackUserID,
-        view: completedTasksView([]),
+        view: inProgressGamesView(gamePlayers[0])
       });
       return;
     }
 
     await client.views.publish({
       user_id: slackUserID,
-      view: openTasksView(gamesListForView),
+      view: allCreatedGamesView(gamesListForView),
     });
   } catch (error) {
     // eslint-disable-next-line no-console

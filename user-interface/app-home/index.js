@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
 
 module.exports = {
-  openTasksView: require('./open-tasks-view'),
-  completedTasksView: require('./completed-tasks-view'),
+  allCreatedGamesView: require('./all-created-games-view'),
+  inProgressGamesView: require('./in-progress-games-view'),
 };

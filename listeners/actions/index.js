@@ -5,6 +5,8 @@ const { buttonMarkAsDoneCallback } = require('./block_button-mark-as-done');
 const { startGameCallback } = require('./start-game');
 const { openTaskCheckboxClickedCallback } = require('./block_open_task_list_home');
 const { joinGame } = require('./join-game');
+const { eliminatePlayer } = require('./eliminate-player')
+const { endGame } = require('./end-game')
 
 module.exports.register = (app) => {
   app.action(
@@ -34,5 +36,17 @@ module.exports.register = (app) => {
   app.action(
       {action_id: /(joinMafia-).*/, type: 'block_actions'},
       joinGame,
-  )
+  );
+  app.action(
+      {action_id: 'eliminate-player',
+      type: "block_actions"
+      },
+      eliminatePlayer
+  );
+    app.action(
+        {action_id: 'end-game',
+            type: "block_actions"
+        },
+        endGame
+    )
 };

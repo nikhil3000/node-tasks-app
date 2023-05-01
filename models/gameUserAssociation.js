@@ -34,6 +34,9 @@ module.exports = (sequelize, DataTypes) => {
                 values: ['CREATOR', 'PLAYER'],
                 defaultValue: 'PLAYER'
             },
+            role: {
+                type: DataTypes.STRING
+            }
         },
         {
             sequelize,

@@ -1,14 +1,12 @@
 const {
   HomeTab, Header, Divider, Section, Actions, Elements} = require('slack-block-builder');
 const pluralize = require('pluralize');
-const { DateTime } = require('luxon');
 
 module.exports = (allGames) => {
   const homeTab = HomeTab({ callbackId: 'tasks-home', privateMetaData: 'open' }).blocks(
     Actions({ blockId: 'task-creation-actions' }).elements(
       Elements.Button({ text: 'My Games' }).value('app-home-nav-open').actionId('app-home-nav-open').primary(true),
       Elements.Button({ text: 'Ongoing Game' }).value('app-home-nav-completed').actionId('app-home-nav-completed'),
-      // Elements.Button({ text: 'Create a task' }).value('app-home-nav-create-a-task').actionId('app-home-nav-create-a-task'),
     ),
   );
 
@@ -24,7 +22,7 @@ module.exports = (allGames) => {
 
 
   const completedTaskList = allGames.map((game) =>
-      Section({ text: `${game.title} with status ${game.status}` }).accessory(
+      Section({ text: `*${game.title}* with status ${game.status}` }).accessory(
           Elements.Button({ text: 'Start Game' })
               .value(`${game.id}`)
               .actionId('start-game'),
@@ -32,7 +30,7 @@ module.exports = (allGames) => {
   );
 
   homeTab.blocks(
-    Header({ text: `You have Nikhil ${allGames.length} open ${pluralize('task', allGames.length)}` }),
+    Header({ text: `You have ${allGames.length} open ${pluralize('task', allGames.length)}` }),
     Divider(),
       completedTaskList,
   );

@@ -1,4 +1,4 @@
-const { openTasksView } = require('../index');
+const { allCreatedGamesView } = require('../index');
 
 test('Returns blocks for the open task list home view if no tasks available', () => {
   const expected = {
@@ -59,7 +59,7 @@ test('Returns blocks for the open task list home view if no tasks available', ()
     ],
     type: 'home',
   };
-  expect(openTasksView([])).toEqual(JSON.stringify(expected));
+  expect(allCreatedGamesView([])).toEqual(JSON.stringify(expected));
 });
 
 test.todo('Returns blocks for the open task list home view if open tasks available');

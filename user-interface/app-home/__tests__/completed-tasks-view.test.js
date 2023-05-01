@@ -1,4 +1,4 @@
-const { completedTasksView } = require('../index');
+const { inProgressGamesView } = require('../index');
 
 test('Returns blocks for the completed task list home view if no tasks available', () => {
   const expected = {
@@ -59,7 +59,7 @@ test('Returns blocks for the completed task list home view if no tasks available
     ],
     type: 'home',
   };
-  expect(completedTasksView([])).toEqual(JSON.stringify(expected));
+  expect(inProgressGamesView([])).toEqual(JSON.stringify(expected));
 });
 
 test.todo(

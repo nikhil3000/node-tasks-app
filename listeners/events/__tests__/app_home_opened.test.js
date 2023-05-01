@@ -7,8 +7,8 @@ const {
   mockAppHomeOpenedEventExistingUser,
 } = require('./__fixtures__/event-fixtures');
 const {
-  openTasksView,
-  completedTasksView,
+  allCreatedGamesView,
+  inProgressGamesView,
 } = require('../../../user-interface/app-home');
 
 const userId = mockAppHomeOpenedEventNewUser.user;
@@ -21,7 +21,7 @@ describe('app_home_opened event callback function test ', () => {
 
     await validateAppHomeOpenedCallback(mockAppHomeEventCallbackNewUserInput, {
       user_id: userId,
-      view: openTasksView([]),
+      view: allCreatedGamesView([]),
     });
   });
 
@@ -36,7 +36,7 @@ describe('app_home_opened event callback function test ', () => {
       mockAppHomeEventCallbackExistingUserInput,
       {
         user_id: userId,
-        view: openTasksView([]),
+        view: allCreatedGamesView([]),
       },
     );
   });
@@ -53,7 +53,7 @@ describe('app_home_opened event callback function test ', () => {
       mockAppHomeEventCallbackExistingUserInput,
       {
         user_id: userId,
-        view: completedTasksView([]),
+        view: inProgressGamesView([]),
       },
     );
   });
