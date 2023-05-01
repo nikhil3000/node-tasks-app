@@ -21,16 +21,23 @@ module.exports = (allGames) => {
 
 
 
-  const completedTaskList = allGames.map((game) =>
-      Section({ text: `*${game.title}* with status ${game.status}` }).accessory(
-          Elements.Button({ text: 'Start Game' })
-              .value(`${game.id}`)
-              .actionId('start-game'),
-      ),
-  );
+  const completedTaskList = allGames.map((game) => {
+    let buttonText = 'Start Game';
+    if(game.status === 'CLOSED'){
+      buttonText = 'Start Another Round';
+    }
+    if(game.status === 'IN_PROGRESS') {
+      buttonText = 'End Game'
+    }
+    return Section({ text: `*${game.title}* with status ${game.status}` }).accessory(
+        Elements.Button({ text: buttonText })
+            .value(`${game.id}`)
+            .actionId(game.status === 'IN_PROGRESS' ? 'end-game' : 'start-game'),
+    )
+  });
 
   homeTab.blocks(
-    Header({ text: `You have ${allGames.length} open ${pluralize('task', allGames.length)}` }),
+    Header({ text: `You have created ${allGames.length} ${pluralize('game', allGames.length)}` }),
     Divider(),
       completedTaskList,
   );

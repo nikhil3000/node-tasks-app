@@ -25,16 +25,19 @@ module.exports = async (client, slackUserID, slackWorkspaceID, navTab) => {
 
     if (navTab === 'completed') {
       const createdGameInProgress = gamesCreated.find(game => game.status === 'IN_PROGRESS');
-      const gamePlayers = await Game.findAll({
-        where: {
-          id: createdGameInProgress.id
-        },
-        include: [
-          {
-            model: User
-          }
-        ]
-      })
+      let gamePlayers = [];
+      if(createdGameInProgress && createdGameInProgress.id) {
+         gamePlayers = await Game.findAll({
+          where: {
+            id: createdGameInProgress.id
+          },
+          include: [
+            {
+              model: User
+            }
+          ]
+        })
+      }
 
       await client.views.publish({
         user_id: slackUserID,
