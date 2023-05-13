@@ -6,7 +6,7 @@ const createNewGame = async ({ ack, view, body, client }) => {
     const providedValues = view.state.values;
 
     const newGameTitle = providedValues.gameTitle.newGameTitle.value;
-    const allowedRoles = providedValues.allowedRoles.checkboxesId.selected_options.map(role => role.value);
+    // const allowedRoles = providedValues.allowedRoles.checkboxesId.selected_options.map(role => role.value);
     const channel = providedValues.newGameChannel.newGameChannel.selected_channel;
 
     try {
@@ -18,7 +18,7 @@ const createNewGame = async ({ ack, view, body, client }) => {
             },
         }))[0];
 
-        const game = Game.build({title: newGameTitle, roles: allowedRoles.toString()});
+        const game = Game.build({title: newGameTitle });
         const savedGame = await game.save();
         await GameUserAssociation.build({gameId: savedGame.dataValues.id, userId: user.dataValues.id, associationType: 'CREATOR'}).save();
         await ack();

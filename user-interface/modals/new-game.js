@@ -1,5 +1,5 @@
-const { Modal, Blocks, Elements, Bits, Input} = require('slack-block-builder');
-const {MafiaRoles} = require("../../types/mafiaRoles");
+const { Modal, Blocks, Elements } = require('slack-block-builder');
+// const {MafiaRoles} = require("../../types/mafiaRoles");
 
 module.exports = (channelId) =>
     Modal({title: 'Create new game', submit: 'Create', callbackId: 'new-game-modal'})
@@ -9,18 +9,18 @@ module.exports = (channelId) =>
                     actionId: 'newGameTitle'
                 }),
             ),
-            Input({label: 'Allowed Roles', blockId: 'allowedRoles'})
-                .dispatchAction()
-                .element(Elements.Checkboxes({actionId: 'checkboxesId'})
-                    .options(
-                        MafiaRoles.map((role) => {
-                        const option = {
-                            text: role,
-                            value: role
-                        }
-                        return Bits.Option(option);
-                }))
-            ),
+            // Input({label: 'Allowed Roles', blockId: 'allowedRoles'})
+            //     .dispatchAction()
+            //     .element(Elements.Checkboxes({actionId: 'checkboxesId'})
+            //         .options(
+            //             MafiaRoles.map((role) => {
+            //             const option = {
+            //                 text: role,
+            //                 value: role
+            //             }
+            //             return Bits.Option(option);
+            //     }))
+            // ),
             Blocks.Input({label: 'Channel', blockId: 'newGameChannel'}).element(
                 Elements.ChannelSelect({
                     actionId: 'newGameChannel',
